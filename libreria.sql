@@ -50,3 +50,35 @@ INSERT INTO BOOKS (ID, NAME, PRICE, CATEGORYID, AUTHORID) VALUES
 (DEFAULT, 'Book-G', 100, 5, 5),
 (DEFAULT, 'Book-H', 200, 5, 6),
 (DEFAULT, 'Book-I', 150, 7, 8);
+
+SELECT * from BOOKS INNER JOIN AUTHORS ON BOOKS.AUTHORID = AUTHORS.ID;
+-----------------------------------------------------------------------------
+SELECT * from BOOKS LEFT OUTER JOIN CATEGORIES ON BOOKS.CATEGORYID = CATEGORIES.ID;
+-----------------------------------------------------------------------------
+SELECT * FROM t1
+LEFT JOIN t2 ON t1.id = t2.id
+UNION ALL
+SELECT * FROM t1
+RIGHT JOIN t2 ON t1.id = t2.id
+WHERE t1.id IS NULL
+
+SELECT * FROM BOOKS
+LEFT JOIN CATEGORIES ON BOOKS.CATEGORYID = CATEGORIES.ID
+UNION ALL
+SELECT * FROM BOOKS
+RIGHT JOIN CATEGORIES ON BOOKS.CATEGORYID = CATEGORIES.ID
+------------------------------------------------------------------------
+SELECT * from BOOKS RIGHT OUTER JOIN CATEGORIES ON BOOKS.CATEGORYID = CATEGORIES.ID;
+-------------------------------------------------------------------------
+SELECT * FROM BOOKS 
+LEFT JOIN AUTHORS 
+ON BOOKS.AUTHORID = AUTHORS.ID 
+WHERE AUTHORS.ID IS NULL;
+--------------------------------------------------------------------------
+SELECT * FROM BOOKS 
+RIGHT JOIN AUTHORS 
+ON BOOKS.AUTHORID = AUTHORS.ID 
+WHERE AUTHORS.ID IS NULL;
+
+
+RIGHT
