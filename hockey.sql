@@ -94,3 +94,61 @@ faceoffsWonLeaderid VARCHAR (4) NOT NULL,
 sogLeaderid VARCHAR (6) NOT NULL,
 PRIMARY KEY (id)
 );
+
+INSERT into playoffrond (id,team1id,team2Id,startTime, endTime, roundNum)
+
+values (1,1,2,'2025-02-27 19:14','2025-02-27 20:34',3);
+
+
+
+INSERT into hockeyGame (id,roundid, startTime, description, team1id, team2id)
+
+values (1, 1, '2025-02-27 19:14', 'Quarterfinals', 1, 2);
+
+
+
+INSERT into GameScores (id, team1IdScore, team2IdScore)
+
+values (1, 2, 2);
+
+
+
+INSERT into roundStats (id, numShutouts, goalLeaderId, assistLeaderId, penaltyLeaderId, plusMinusLeaderid, faceoffsWonLeaderId, sogLeaderId)
+
+values (1, 3, 4, 4, 8, 3, 14, 20);
+
+
+
+INSERT into UserStartsPicks (id, roundId, goalLeaderId, assistLeaderId, penaltyLeaderId, plusMinusId, faceoffsWonLeaderId, sogLeaderId, numShutouts, userId)
+
+values (1, 1, 10, 15, 12, 8, 14, 20, 2, 2);
+
+
+
+INSERT into User (id, username, password)
+
+values (3, 'Cris-az', 'arceus');
+
+
+
+INSERT INTO UserScorePicks (id, hockeyGameId, team1score, team2score, userid)
+
+values (1, 1, 2, 2, 1);
+
+
+
+INSERT into hockeyTeam (id, name, LogoLink)
+
+values(1, 'Team A', '0XA');
+
+
+
+INSERT into HockeyTeamPlayer (id, hockeyTeamId, firstName, lastName, jerseyNum, position)
+
+values (1, 1, 'Cris', 'Armando', 11, 'Forward');
+
+
+
+INSERT into UserInfo  (id, firstName, lastName, email, Round1Points, Round2Points, Round3Points, Round4Points)
+
+values (1, 'Armando', 'Cris', 'Gengar@gmail.com', 0, 1, 1, 2);
