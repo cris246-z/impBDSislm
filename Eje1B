@@ -26,41 +26,6 @@ INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
 CREATE TABLE DirectorioTel (
 CustomerId int (4) NOT NULL,
 TypePhoneNumber varchar (10)NOT NULL,
-Nunber varchar(13) NOT NULL
-CREATE TABLE NumerodeDispositivos (
-CustomerId int NOT NULL,
-Celular varchar (10),
-10
-Trabajo varchar (10),
-11
-Casa varchar (10),
-12
-PRINARY KEY (CustomerId)
-13
-14
-15
-16
-SELECT
-17
-CustomerId,
-18
-MAX(CASE MHEN TypePhoneNumber - 'Celular' THEN Number END) AS 'Celular',
-19
-MAX(CASE NHEN TypePhoneNumber-'Trabajo' THEN Number END) AS "Trabajo',
-20
-MAX(CASE NHEN TypePhoneNumber-"Casa'THEN Number END)AS "Casa'
-21
-FROM
-22
-DirectorioTel
-23
-GROUP BY
-24
-CustomerId;
-25
-26
-27
-28
 --------------------------------------------------------------------
 CREATE TABLE EtapasdeDesarollo(
 desarrollo INT (8) NOT NULL,
