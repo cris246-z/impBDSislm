@@ -1,0 +1,24 @@
+CREATE TABLE Directoriotelefónico (
+Customer_ID  INT (10) NOT NULL,
+TypePhone VARCHAR (10) NOT NULL,
+Number VARCHAR (10) NOT NULL,
+PRIMARY KEY (Customer_ID,TypePhone,Number)
+);
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('1001','celular', '3338975421');
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('1001', 'Trabajo', '3338976542');
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('1001', 'Casa', '3336989874');
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('2002', 'Celular' ,'3339636544');
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('2002', 'Trabajo', '3338129856');
+
+INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
+ values ('3003', 'Celular' ,'3339876541');
