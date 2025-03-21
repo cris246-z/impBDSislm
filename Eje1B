@@ -30,3 +30,27 @@ etapa INT (1) NOT NULL,
 finalizado VARCHAR (10) NOT NULL,
 PRIMARY KEY (desarrollo,etapa,finalizado)
 );
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('RestAPI', '1', '01/02/2024');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('RestAPI',' 2', '30/05/2024' );
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('RestAPI', '3', '29/06/2024');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('Web ','1 ','28/10/2024');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('Web', '2', '20/11/2024');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('Web', '3','NOT NULL');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('App', '1' ,'30/01/2025');
+
+INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
+values ('App', '2','NOT NULL');
