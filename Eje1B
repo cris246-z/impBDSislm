@@ -25,10 +25,9 @@ INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
  
 --------------------------------------------------------------------
 CREATE TABLE EtapasdeDesarollo(
-desarrollo INT (8) NOT NULL,
+desarrollo VARCHAR (15) NOT NULL,
 etapa INT (1) NOT NULL,
-finalizado VARCHAR (10) NOT NULL,
-PRIMARY KEY (desarrollo,etapa,finalizado)
+finalizado VARCHAR (10) NOT NULL
 );
 
 INSERT INTO EtapasdeDesarollo(desarrollo,etapa,finalizado)
