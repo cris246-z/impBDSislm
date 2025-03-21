@@ -22,3 +22,10 @@ INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
 
 INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
  values ('3003', 'Celular' ,'3339876541');
+--------------------------------------------------------------------
+CREATE TABLE EtapasdeDesarollo(
+desarrollo INT (8) NOT NULL,
+etapa INT (1) NOT NULL,
+finalizado VARCHAR (10) NOT NULL,
+PRIMARY KEY (desarrollo,etapa,finalizado)
+);
