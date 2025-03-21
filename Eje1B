@@ -22,7 +22,17 @@ INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
 
 INSERT INTO Directoriotelefónico (Customer_ID,TypePhone,Number)
  values ('3003', 'Celular' ,'3339876541');
- 
+
+SELECT 
+Customer_ID,
+MAX(CASE WHEN TypePhone =  'Celular' THEN Number END) AS 'Celular',
+MAX(CASE WHEN TypePhone =  'Trabajo' THEN Number END) AS 'Trabajo',
+MAX(CASE WHEN TypePhone =  'Casa' THEN Number END) AS 'Casa'
+FROM
+Directoriotelefónico
+GROUP BY 
+Customer_ID;
+
 --------------------------------------------------------------------
 CREATE TABLE EtapasdeDesarollo(
 desarrollo VARCHAR (15) NOT NULL,
