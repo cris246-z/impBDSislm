@@ -1,0 +1,43 @@
+CREATE TABLE carrito1(
+articulos TINYTEXT
+);
+
+
+INSERT INTO carrito1 (articulos)
+VALUES ('Azúcar');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Pan');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Jugo');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Refresco');
+
+CREATE TABLE carrito2(
+articulos2 TINYTEXT
+);
+
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Azúcar');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Pan');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Mantequilla');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Queso');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Manzana');
+
+SELECT * FROM carrito1 LEFT OUTER JOIN carrito2 ON articulos =articulos2 union SELECT * FROM carrito1 RIGHT OUTER JOIN carrito2
+ON articulos=articulos2;
+---------------------------------------------------------------------------------------------------------
