@@ -41,3 +41,44 @@ VALUES ('Manzana');
 SELECT * FROM carrito1 LEFT OUTER JOIN carrito2 ON articulos =articulos2 union SELECT * FROM carrito1 RIGHT OUTER JOIN carrito2
 ON articulos=articulos2;
 ---------------------------------------------------------------------------------------------------------
+CREATE TABLE empresa(
+id_empleados VARCHAR (15) NOT NULL,
+id_gerente VARCHAR (15) default NULL,
+puesto VARCHAR (10) NOT NULL
+);
+
+INSERT INTO empresa(id_empleados,puesto)
+VALUES ('1001','Presidente');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('2002', '1001' ,'Director');
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('3003', '1001' ,'Gerente');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('4004' ,'2002' ,'Ingeniero');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('5005' ,'2002' ,'Contador');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('6006' ,'2002' , 'Administrador');
+
+
+
+WITH RECURSIVE Jerarquia AS (
+    SELECT id_empleados, id_gerente, puesto, 0 AS Nivel
+    FROM empresa
+    WHERE id_gerente IS NULL
+    union all
+    SELECT e.id_empleados, e.id_gerente, e.puesto, j.Nivel + 1
+    FROM empresa e
+    JOIN Jerarquia j ON e.id_gerente = j.id_empleados
+    )
+    SELECT * FROM Jerarquia ORDER BY Nivel, id_empleados;
+--------------------------------------------------------------------------------
