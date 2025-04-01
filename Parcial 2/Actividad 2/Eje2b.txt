@@ -82,3 +82,35 @@ WITH RECURSIVE Jerarquia AS (
     )
     SELECT * FROM Jerarquia ORDER BY Nivel, id_empleados;
 --------------------------------------------------------------------------------
+CREATE TABLE viajes (
+Id_cliente VARCHAR(15) NOT NULL,
+Id_Orden VARCHAR(15) NOT NULL,
+Estado_Destino VARCHAR(15),
+Costo VARCHAR(15) NOT NULL
+);
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','1','JAL','$987');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','2','CDMX','$400');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','3','CDMX','$545');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','4','CDMX','$321');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('2002','5','MTY','$324');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('3003','6','JAL','$931');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('4004','7','JAL','$876');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('5005','8','CDMX','$567');
+
+select * FROM viajes where id_cliente=1001 AND Estado_Destino='CDMX';
