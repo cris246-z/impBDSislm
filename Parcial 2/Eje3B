@@ -24,6 +24,16 @@ SELECT A.Caso1, B.Caso2, C.Caso3
    WHERE A.Caso1 <> B.Caso2
       AND A.Caso1 <> C.Caso3
       AND B.Caso2 <> C.Caso3;
++-------+-------+-------+
+| Caso1 | Caso2 | Caso3 |
++-------+-------+-------+
+| B     | C     | A     |
+| C     | B     | A     |
+| A     | C     | B     |
+| C     | A     | B     |
+| A     | B     | C     |
+| B     | A     | C     |
++-------+-------+-------+
 --------------------------------------------------------------------------------
 CREATE TABLE días(
 desarrollo VARCHAR (10) NOT NULL,
@@ -69,6 +79,13 @@ FROM (
  SELECT desarrollo, DATEDIFF(terminación, LAG(terminación) OVER (PARTITION BY desarrollo ORDER BY terminación)) AS DIFERENCIA    FROM días
 ) AS A
 GROUP BY desarrollo;
++------------+-------+
+| desarrollo | días  |
++------------+-------+
+| App        |  NULL |
+| RestAPI    |  NULL |
+| Web        |  NULL |
++------------+-------+
 --------------------------------------------------------------------------------------------------
 CREATE TABLE inventario(
 fecha VARCHAR (10) NOT NULL,
