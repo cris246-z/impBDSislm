@@ -1,0 +1,91 @@
+CREATE TABLE experimento (
+caso VARCHAR (1) NOT NULL
+);
+
+INSERT INTO experimento (caso )
+VALUES ('A');
+
+INSERT INTO experimento (caso )
+VALUES ('B');
+
+INSERT INTO experimento (caso )
+VALUES ('C');
+
+SELECT A.Caso1, B.Caso2, C.Caso3
+    FROM (SELECT 'A' AS Caso1 UNION ALL
+           SELECT 'B' UNION ALL
+           SELECT 'C') AS A
+     CROSS JOIN (SELECT 'A' AS Caso2 UNION ALL
+               SELECT 'B' UNION ALL
+                SELECT 'C') AS B
+    CROSS JOIN (SELECT 'A' AS Caso3 UNION ALL
+               SELECT 'B' UNION ALL
+                SELECT 'C') AS C
+   WHERE A.Caso1 <> B.Caso2
+      AND A.Caso1 <> C.Caso3
+      AND B.Caso2 <> C.Caso3;
+--------------------------------------------------------------------------------
+CREATE TABLE días(
+desarrollo VARCHAR (10) NOT NULL,
+terminación VARCHAR (15) NOT NULL 
+);
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('RestAPI', '06/01/2024');
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('RestAPI', '06/14/2024');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('RestAPI', '06/15/2024');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('Web', '06/01/2014');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('Web', '06/02/2024');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('Web', '06/19/2024');
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('App', '06/01/2024');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('App', '05/15/2024');
+
+
+INSERT INTO días(desarrollo,terminación) 
+VALUES ('App', '06/30/2024');
+
+
+SELECT desarrollo, AVG(DIFERENCIA) AS días
+FROM (
+ SELECT desarrollo, DATEDIFF(terminación, LAG(terminación) OVER (PARTITION BY desarrollo ORDER BY terminación)) AS DIFERENCIA    FROM días
+) AS A
+GROUP BY desarrollo;
+--------------------------------------------------------------------------------------------------
+CREATE TABLE inventario(
+fecha VARCHAR (10) NOT NULL,
+ajuste VARCHAR (10) NOT NULL
+);
+ 
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
