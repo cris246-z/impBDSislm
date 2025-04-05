@@ -106,3 +106,8 @@ VALUES ('03/01/2025', '100');
 
 INSERT INTO inventario(fecha,ajuste)
 VALUES ('03/01/2025', '100');
+
+SELECT fecha,
+           ajuste,
+           SUM(ajuste) OVER (ORDER BY fecha) AS Inventario
+     FROM inventario;
