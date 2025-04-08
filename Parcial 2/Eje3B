@@ -23,57 +23,29 @@ WHERE
   AND B.caso <> C.caso;
 
 --------------------------------------------------------------------------------
-CREATE TABLE días(
-desarrollo VARCHAR (10) NOT NULL,
-terminación VARCHAR (15) NOT NULL 
+CREATE TABLE días (
+  desarrollo VARCHAR(10) NOT NULL,
+  terminación DATE NOT NULL
 );
 
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('RestAPI', '06/01/2024');
+INSERT INTO días(desarrollo, terminación) 
+VALUES 
+  ('RestAPI', '2024-06-01'),
+  ('RestAPI', '2024-06-14'),
+  ('RestAPI', '2024-06-15'),
+  ('Web', '2024-06-01'),
+  ('Web', '2024-06-02'),
+  ('Web', '2024-06-19'),
+  ('App', '2024-06-01'),
+  ('App', '2024-05-15'),
+  ('App', '2024-06-30');
 
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('RestAPI', '06/14/2024');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('RestAPI', '06/15/2024');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('Web', '06/01/2014');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('Web', '06/02/2024');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('Web', '06/19/2024');
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('App', '06/01/2024');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('App', '05/15/2024');
-
-
-INSERT INTO días(desarrollo,terminación) 
-VALUES ('App', '06/30/2024');
-
-
-SELECT desarrollo, AVG(DIFERENCIA) AS días
+SELECT desarrollo, ROUND(AVG(DIFERENCIA)) AS dias
 FROM (
- SELECT desarrollo, DATEDIFF(terminación, LAG(terminación) OVER (PARTITION BY desarrollo ORDER BY terminación)) AS DIFERENCIA    FROM días
+  SELECT desarrollo, DATEDIFF(terminación, LAG(terminación) OVER (PARTITION BY desarrollo ORDER BY terminación)) AS DIFERENCIA 
+  FROM días
 ) AS A
 GROUP BY desarrollo;
-+------------+-------+
-| desarrollo | días  |
-+------------+-------+
-| App        |  NULL |
-| RestAPI    |  NULL |
-| Web        |  NULL |
-+------------+-------+
 --------------------------------------------------------------------------------------------------
 CREATE TABLE inventario(
 fecha VARCHAR (10) NOT NULL,
