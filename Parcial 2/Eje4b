@@ -93,4 +93,65 @@ AND A.Id_empleado <> B.Id_empleado
 GROUP BY A.Id_empleado, B.Id_empleado
 HAVING COUNT(*) = 3;
 
+------------------------------------------------------------------------
+create table Mean_Median_Mode_y_Range ( 
+Entero VARCHAR(5) NOT NULL
+);
 
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('5');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('6');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('10');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('10');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('13');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('14');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('17');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('20');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('81');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('90');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('76');
+
+
+SELECT AVG(Entero) AS MEDIA FROM Mean_Median_Mode_y_Range ;
+
+
+WITH Tabla AS (
+         SELECT Entero,
+                ROW_NUMBER() OVER (ORDER BY Entero) AS fila,
+                COUNT(*) OVER () AS total
+         FROM Mean_Median_Mode_y_Range 
+     )
+     SELECT AVG(Entero) AS MEDIANA
+     FROM Tabla
+     WHERE fila = CEIL(total / 2.0) OR fila = FLOOR(total / 2.0 + 1);
+
+
+SELECT Entero AS MODA
+FROM Mean_Median_Mode_y_Range 
+GROUP BY Entero
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+
+SELECT (MAX(Entero) - MIN(Entero)) AS RANGO FROM Mean_Median_Mode_y_Range;
