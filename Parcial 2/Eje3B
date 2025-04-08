@@ -11,29 +11,17 @@ VALUES ('B');
 INSERT INTO experimento (caso )
 VALUES ('C');
 
-SELECT A.Caso1, B.Caso2, C.Caso3
-    FROM (SELECT 'A' AS Caso1 UNION ALL
-           SELECT 'B' UNION ALL
-           SELECT 'C') AS A
-     CROSS JOIN (SELECT 'A' AS Caso2 UNION ALL
-               SELECT 'B' UNION ALL
-                SELECT 'C') AS B
-    CROSS JOIN (SELECT 'A' AS Caso3 UNION ALL
-               SELECT 'B' UNION ALL
-                SELECT 'C') AS C
-   WHERE A.Caso1 <> B.Caso2
-      AND A.Caso1 <> C.Caso3
-      AND B.Caso2 <> C.Caso3;
-+-------+-------+-------+
-| Caso1 | Caso2 | Caso3 |
-+-------+-------+-------+
-| B     | C     | A     |
-| C     | B     | A     |
-| A     | C     | B     |
-| C     | A     | B     |
-| A     | B     | C     |
-| B     | A     | C     |
-+-------+-------+-------+
+SELECT 
+  CONCAT(A.caso, ',', B.caso, ',', C.caso) AS permutacion
+FROM 
+  experimento A 
+  CROSS JOIN experimento B
+  CROSS JOIN experimento C
+WHERE 
+  A.caso <> B.caso
+  AND A.caso <> C.caso
+  AND B.caso <> C.caso;
+
 --------------------------------------------------------------------------------
 CREATE TABLE días(
 desarrollo VARCHAR (10) NOT NULL,
