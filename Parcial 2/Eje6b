@@ -1,1 +1,117 @@
+CREATE TABLE Marcadores (
+Jugador_A VARCHAR(10) NOT NULL,
+Jugador_B VARCHAR(10) NOT NULL,
+Marcador VARCHAR(10) NOT NULL
+);
+
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('1001','2002','150');
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('3003','4004','15');
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('4004','3003','125');
+
+
+SELECT
+    LEAST(jugador_A, jugador_B) AS jugador_A,
+    GREATEST(jugador_A, jugador_B) AS jugador_B,
+    SUM(marcador) AS Marcador
+FROM Marcadores 
+GROUP BY LEAST(jugador_A, jugador_B), GREATEST(jugador_A, jugador_B);
+
+
+-------------------------------------------------------------
+
+
+
+CREATE TABLE Desagrupación (
+Producto VARCHAR(10),
+Cantidad VARCHAR(10)
+);
+
+
+INSERT INTO Desagrupación (Producto,Cantidad )
+values ('Lápiz','3');
+
+
+INSERT INTO Desagrupación (Producto,Cantidad )
+values ('Borrador','4');
+
+
+INSERT INTO Desagrupación (Producto,Cantidad )
+values ('Cuaderno','2');
+
+SELECT 'Lápiz' AS Producto, 1 AS Cantidad UNION ALL
+    SELECT 'Lápiz', 1 UNION ALL
+    SELECT 'Lápiz', 1 UNION ALL
+    SELECT 'Borrador', 1 UNION ALL
+    SELECT 'Borrador', 1 UNION ALL
+    SELECT 'Borrador', 1 UNION ALL
+    SELECT 'Borrador', 1 UNION ALL
+    SELECT 'Cuaderno', 1 UNION ALL
+    SELECT 'Cuaderno', 1;
+-----------------------------------------------------------------
+
+CREATE TABLE asientos( num_asiento INTEGER );
+
+ INSERT INTO asientos VALUES (7),(13),(14),(15),(27),(28),(29),(30), (31),(32),(33),(34),(35),(52),(53),(54); 
+
+
+WITH asientos_ext AS (
+  SELECT 0 AS num_asiento
+  UNION ALL
+  SELECT num_asiento FROM asientos
+)
+SELECT
+    a.num_asiento + 1 AS espacio_inicio,
+    (SELECT MIN(b.num_asiento) - 1
+     FROM asientos_ext b
+     WHERE b.num_asiento > a.num_asiento) AS espacio_final
+FROM asientos_ext a
+WHERE EXISTS (
+    SELECT 1 FROM asientos_ext b
+    WHERE b.num_asiento > a.num_asiento AND b.num_asiento > a.num_asiento + 1
+)
+AND (SELECT MIN(b.num_asiento) - 1
+     FROM asientos_ext b
+     WHERE b.num_asiento > a.num_asiento) >= a.num_asiento + 1
+ORDER BY espacio_inicio;
+
+
+
+WITH asientos_ext AS (
+    SELECT 0 AS num_asiento
+    UNION ALL
+    SELECT num_asiento FROM asientos
+)
+SELECT SUM(espacio_final - espacio_inicio + 1) AS disponibles
+FROM (
+    SELECT
+        a.num_asiento + 1 AS espacio_inicio,
+        (SELECT MIN(b.num_asiento) - 1
+         FROM asientos_ext b
+         WHERE b.num_asiento > a.num_asiento) AS espacio_final
+    FROM asientos_ext a
+    WHERE EXISTS (
+        SELECT 1
+        FROM asientos_ext b
+        WHERE b.num_asiento > a.num_asiento AND b.num_asiento > a.num_asiento + 1
+    )
+) AS espacios
+WHERE espacio_final >= espacio_inicio;
+
+
+
+SELECT
+    IF(num_asiento % 2 = 0, 'pares', 'impares') AS tipo,
+    COUNT(*) AS total
+FROM asientos
+GROUP BY tipo;
+
+
+
+
 
