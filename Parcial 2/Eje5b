@@ -1,1 +1,95 @@
+create table proceso_indeterminado (
+Flujo VARCHAR(10) NOT NULL,
+Paso VARCHAR(10) NOT NULL,
+Estado VARCHAR(10) NOT NULL
+);
+
+
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Alpha','1','Error');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Alpha','2','Finalizado');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Alpha','3','Corriendo' );
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Bravo','1','Finalizado');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Bravo','2','Finalizado');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Charlie','1','Corriendo');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Charlie','2','Corriendo');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Delta','1','Error');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Delta','2','Error');
+
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Echo','1','Corriendo');
+
+INSERT INTO proceso_indeterminado (Flujo,Paso,Estado )
+values ('Echo','2', 'Finalizado');
+
+SELECT Flujo,
+       CASE
+           WHEN COUNT(DISTINCT estado) = 1 THEN MAX(estado)
+           WHEN SUM(estado = 'Error') > 0
+                AND (SUM(estado = 'Finalizado') > 0 OR SUM(estado = 'Corriendo') > 0)
+           THEN 'Indeterminado'
+           WHEN SUM(estado = 'Finalizado') > 0
+                AND SUM(estado = 'Corriendo') > 0
+           THEN 'Corriendo'
+       END AS Estadol
+FROM proceso_indeterminado 
+GROUP BY flujo;
+-----------------------------------------------------------
+CREATE TABLE Concatenación (
+Secuencia VARCHAR(5) ,
+Sintaxis  VARCHAR(10)
+);
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('1','SELECT');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('2', 'Producto');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('3','Precio');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('4', Disponibilidad);
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('5','FROM');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('6','Productos');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('7','WHERE');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('8','Precio');
+
+INSERT INTO Concatenación (Secuencia,Sintaxis )
+values ('9','>100');
+
+
+
+SELECT CONCAT('SELECT ', GROUP_CONCAT(Columna ORDER BY Columna SEPARATOR ', '), ' FROM Concatenación WHERE Precio >100')
+AS Sintaxis
+FROM (SELECT 'Producto' AS Columna UNION ALL
+      SELECT 'Precio' UNION ALL
+      SELECT 'Disponibilidad') AS Columnas;
 
