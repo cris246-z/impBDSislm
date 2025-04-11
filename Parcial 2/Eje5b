@@ -52,7 +52,8 @@ SELECT Flujo,
        END AS Estadol
 FROM proceso_indeterminado 
 GROUP BY flujo;
------------------------------------------------------------
+--------------------------------------------
+
 CREATE TABLE Concatenación (
 Secuencia VARCHAR(5) ,
 Sintaxis  VARCHAR(10)
@@ -93,3 +94,28 @@ FROM (SELECT 'Producto' AS Columna UNION ALL
       SELECT 'Precio' UNION ALL
       SELECT 'Disponibilidad') AS Columnas;
 
+------------------------------------------------------------------------
+
+CREATE TABLE Marcadores (
+Jugador_A VARCHAR(10) NOT NULL,
+Jugador_B VARCHAR(10) NOT NULL,
+Marcador VARCHAR(10) NOT NULL
+);
+
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('1001','2002','150');
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('3003','4004','15');
+
+INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
+values ('4004','3003','125');
+
+
+SELECT
+    LEAST(jugador_A, jugador_B) AS jugador_A,
+    GREATEST(jugador_A, jugador_B) AS jugador_B,
+    SUM(marcador) AS Marcador
+FROM Marcadores 
+GROUP BY LEAST(jugador_A, jugador_B), GREATEST(jugador_A, jugador_B);
