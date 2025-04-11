@@ -1,28 +1,43 @@
-CREATE TABLE Marcadores (
-Jugador_A VARCHAR(10) NOT NULL,
-Jugador_B VARCHAR(10) NOT NULL,
-Marcador VARCHAR(10) NOT NULL
+CREATE TABLE Volver_al_futuro (
+  Inicio VARCHAR(15),
+  Final VARCHAR(15)
 );
 
+INSERT INTO Volver_al_futuro (Inicio, Final) VALUES 
+  ('01/01/2025', '01/05/2025'),
+  ('01/03/2025', '01/09/2025'),
+  ('01/10/2025', '01/11/2025'),
+  ('01/12/2025', '01/16/2025'),
+  ('01/15/2025', '01/19/2025');
 
-INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
-values ('1001','2002','150');
+SET @inicio := NULL;
+SET @final := NULL;
+SET @grupo := 0;
 
-INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
-values ('3003','4004','15');
-
-INSERT INTO Marcadores (Jugador_A ,Jugador_B,Marcador )
-values ('4004','3003','125');
-
-
-SELECT
-    LEAST(jugador_A, jugador_B) AS jugador_A,
-    GREATEST(jugador_A, jugador_B) AS jugador_B,
-    SUM(marcador) AS Marcador
-FROM Marcadores 
-GROUP BY LEAST(jugador_A, jugador_B), GREATEST(jugador_A, jugador_B);
-
-
+SELECT MIN(inicio) AS Inicio, MAX(final) AS Final
+FROM (
+  SELECT STR_TO_DATE(inicio, '%m/%d/%Y') AS inicio,
+         STR_TO_DATE(final, '%m/%d/%Y') AS final,
+         @grupo := IF(
+           @inicio IS NULL OR STR_TO_DATE(inicio, '%m/%d/%Y') > DATE_ADD(@final, INTERVAL 0 DAY),
+           @grupo + 1,
+           @grupo
+         ) AS grupo,
+         @inicio := IF(
+           @inicio IS NULL OR STR_TO_DATE(inicio, '%m/%d/%Y') > DATE_ADD(@final, INTERVAL 0 DAY),
+           STR_TO_DATE(inicio, '%m/%d/%Y'),
+           @inicio
+         ),
+         @final := IF(
+           @final IS NULL OR STR_TO_DATE(inicio, '%m/%d/%Y') > DATE_ADD(@final, INTERVAL 0 DAY),
+           STR_TO_DATE(final, '%m/%d/%Y'),
+           IF(STR_TO_DATE(final, '%m/%d/%Y') > @final, STR_TO_DATE(final, '%m/%d/%Y'), @final)
+         ) AS final_update
+  FROM Volver_al_futuro
+  ORDER BY STR_TO_DATE(inicio, '%m/%d/%Y')
+) AS fusionado
+GROUP BY grupo
+ORDER BY Inicio;
 -------------------------------------------------------------
 
 
