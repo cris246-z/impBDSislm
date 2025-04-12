@@ -1,0 +1,73 @@
+CREATE TABLE experimento (
+caso VARCHAR (1) NOT NULL
+);
+
+INSERT INTO experimento (caso )
+VALUES ('A');
+
+INSERT INTO experimento (caso )
+VALUES ('B');
+
+INSERT INTO experimento (caso )
+VALUES ('C');
+
+SELECT 
+  CONCAT(A.caso, ',', B.caso, ',', C.caso) AS permutacion
+FROM 
+  experimento A 
+  CROSS JOIN experimento B
+  CROSS JOIN experimento C
+WHERE 
+  A.caso <> B.caso
+  AND A.caso <> C.caso
+  AND B.caso <> C.caso;
+
+--------------------------------------------------------------------------------
+CREATE TABLE días (
+  desarrollo VARCHAR(10) NOT NULL,
+  terminación DATE NOT NULL
+);
+
+INSERT INTO días(desarrollo, terminación) 
+VALUES 
+  ('RestAPI', '2024-06-01'),
+  ('RestAPI', '2024-06-14'),
+  ('RestAPI', '2024-06-15'),
+  ('Web', '2024-06-01'),
+  ('Web', '2024-06-02'),
+  ('Web', '2024-06-19'),
+  ('App', '2024-06-01'),
+  ('App', '2024-05-15'),
+  ('App', '2024-06-30');
+
+SELECT desarrollo, ROUND(AVG(DIFERENCIA)) AS dias
+FROM (
+  SELECT desarrollo, DATEDIFF(terminación, LAG(terminación) OVER (PARTITION BY desarrollo ORDER BY terminación)) AS DIFERENCIA 
+  FROM días
+) AS A
+GROUP BY desarrollo;
+--------------------------------------------------------------------------------------------------
+CREATE TABLE inventario(
+fecha VARCHAR (10) NOT NULL,
+ajuste VARCHAR (10) NOT NULL
+);
+ 
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+INSERT INTO inventario(fecha,ajuste)
+VALUES ('03/01/2025', '100');
+
+SELECT fecha,
+           ajuste,
+           SUM(ajuste) OVER (ORDER BY fecha) AS Inventario
+     FROM inventario;
