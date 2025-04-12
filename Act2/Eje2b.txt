@@ -1,0 +1,116 @@
+CREATE TABLE carrito1(
+articulos TINYTEXT
+);
+
+
+INSERT INTO carrito1 (articulos)
+VALUES ('Azúcar');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Pan');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Jugo');
+
+
+INSERT INTO carrito1(articulos)
+VALUES ('Refresco');
+
+CREATE TABLE carrito2(
+articulos2 TINYTEXT
+);
+
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Azúcar');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Pan');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Mantequilla');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Queso');
+
+INSERT INTO carrito2(articulos2)
+VALUES ('Manzana');
+
+SELECT * FROM carrito1 LEFT OUTER JOIN carrito2 ON articulos =articulos2 union SELECT * FROM carrito1 RIGHT OUTER JOIN carrito2
+ON articulos=articulos2;
+---------------------------------------------------------------------------------------------------------
+CREATE TABLE empresa(
+id_empleados VARCHAR (15) NOT NULL,
+id_gerente VARCHAR (15) default NULL,
+puesto VARCHAR (10) NOT NULL
+);
+
+INSERT INTO empresa(id_empleados,puesto)
+VALUES ('1001','Presidente');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('2002', '1001' ,'Director');
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('3003', '1001' ,'Gerente');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('4004' ,'2002' ,'Ingeniero');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('5005' ,'2002' ,'Contador');
+
+
+INSERT INTO empresa(id_empleados,id_gerente,puesto )
+VALUES ('6006' ,'2002' , 'Administrador');
+
+
+
+WITH RECURSIVE Jerarquia AS (
+    SELECT id_empleados, id_gerente, puesto, 0 AS Nivel
+    FROM empresa
+    WHERE id_gerente IS NULL
+    union all
+    SELECT e.id_empleados, e.id_gerente, e.puesto, j.Nivel + 1
+    FROM empresa e
+    JOIN Jerarquia j ON e.id_gerente = j.id_empleados
+    )
+    SELECT * FROM Jerarquia ORDER BY Nivel, id_empleados;
+--------------------------------------------------------------------------------
+CREATE TABLE viajes (
+Id_cliente VARCHAR(15) NOT NULL,
+Id_Orden VARCHAR(15) NOT NULL,
+Estado_Destino VARCHAR(15),
+Costo VARCHAR(15) NOT NULL
+);
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','1','JAL','$987');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','2','CDMX','$400');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','3','CDMX','$545');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('1001','4','CDMX','$321');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('2002','5','MTY','$324');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('3003','6','JAL','$931');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('4004','7','JAL','$876');
+
+INSERT INTO viajes (Id_cliente,Id_Orden,Estado_Destino,Costo)
+values ('5005','8','CDMX','$567');
+
+select * FROM viajes where id_cliente=1001 AND Estado_Destino='CDMX';
