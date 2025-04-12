@@ -1,0 +1,157 @@
+create table Flujos_de_trabajo (
+Flujo VARCHAR(15) NOT NULL,
+Caso_1 VARCHAR(15) NOT NULL,
+Caso_2 VARCHAR(15) NOT NULL, 
+Caso_3 VARCHAR(15) NOT NULL
+);
+
+
+INSERT INTO Flujos_de_trabajo (Flujo,Caso_1,Caso_2,Caso_3)
+values ('Alta de usuario','0','0','0');
+
+
+INSERT INTO Flujos_de_trabajo (Flujo,Caso_1,Caso_2,Caso_3)
+values ('Baja de usuario','0','1','1');
+
+
+INSERT INTO Flujos_de_trabajo (Flujo,Caso_1,Caso_2,Caso_3)
+values ('Nueva Orden','1','0','0');
+
+
+INSERT INTO Flujos_de_trabajo (Flujo,Caso_1,Caso_2,Caso_3)
+values ('Elimina Orden','0','0','0');
+
+
+SELECT Flujo,
+  (Caso_1 + Caso_2 + Caso_3) AS Aprobado
+FROM Flujos_de_trabajo;
+
+--------------------------------------------------------------------------------------------------------------------
+create table Licencias (
+Id_empleado VARCHAR(5) NOT NULL,
+Licencia VARCHAR(5) NOT NULL
+);
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('1001','Tipo A');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('1001','Tipo B');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('1001','Tipo C');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('2002','Tipo A');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('2002','Tipo B');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('2002','Tipo C');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('3003','Tipo A');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('3003','Tipo D');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('4004','Tipo A');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('4004','Tipo D');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('5005','Tipo A');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('5005','Tipo B');
+
+
+INSERT INTO Licencias (Id_empleado,Licencia)
+values ('5005','Tipo D');
+
+
+SELECT A.Id_empleado, B.Id_empleado, COUNT(*) AS coincidencias
+FROM Licencias A
+JOIN Licencias B
+ON A.Licencia = B.Licencia
+AND A.Id_empleado <> B.Id_empleado
+GROUP BY A.Id_empleado, B.Id_empleado
+HAVING COUNT(*) = 3;
+
+------------------------------------------------------------------------
+create table Mean_Median_Mode_y_Range ( 
+Entero VARCHAR(5) NOT NULL
+);
+
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('5');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('6');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('10');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('10');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('13');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('14');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('17');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('20');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('81');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('90');
+
+INSERT INTO Mean_Median_Mode_y_Range (Entero)
+values ('76');
+
+
+SELECT AVG(Entero) AS MEDIA FROM Mean_Median_Mode_y_Range ;
+
+
+WITH Tabla AS (
+         SELECT Entero,
+                ROW_NUMBER() OVER (ORDER BY Entero) AS fila,
+                COUNT(*) OVER () AS total
+         FROM Mean_Median_Mode_y_Range 
+     )
+     SELECT AVG(Entero) AS MEDIANA
+     FROM Tabla
+     WHERE fila = CEIL(total / 2.0) OR fila = FLOOR(total / 2.0 + 1);
+
+
+SELECT Entero AS MODA
+FROM Mean_Median_Mode_y_Range 
+GROUP BY Entero
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+
+SELECT (MAX(Entero) - MIN(Entero)) AS RANGO FROM Mean_Median_Mode_y_Range;
