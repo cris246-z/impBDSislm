@@ -1,0 +1,106 @@
+CREATE TABLE Precios (
+    Id_producto VARCHAR(10),
+    Fecha DATE,
+    Precio DECIMAL(10,2)
+);
+
+INSERT INTO Precios (Id_producto, Fecha, Precio)
+VALUES 
+    ('1001','2025/01/01',19.99),
+    ('1001','2025/04/15',59.99),
+    ('1001','2025/06/08',79.99),
+    ('2002','2025/04/17',39.99),
+    ('2002','2025/05/19',59.99);
+
+SELECT p.Id_producto, p.Fecha, p.Precio
+FROM Precios p
+INNER JOIN (
+    SELECT Id_producto, MAX(Fecha) AS MaxFecha
+    FROM Precios
+    GROUP BY Id_producto
+) sub
+ON p.Id_producto = sub.Id_producto AND p.Fecha = sub.MaxFecha;
+
+create table Promedio_ventas (
+Id_orden varchar(5) ,
+Id_cliente varchar(10),
+Fecha varchar(15),
+Total varchar(5),
+Estado varchar(10)
+);
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('1', '1001' ,'01/01/2025', '100', 'JAL');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('2', '1001',' 01/01/2025', '150', 'JAL' );
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('3', '1001', '01/01/2025','75','JAL' );
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('4','1001','02/01/2025','100','JAL');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('5','1001','03/01/2025','100','JAL' );
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('6','2002','02/01/2025','75','JAL');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('7','2002','02/01/2025','150','JAL');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('8','3003','01/01/2025','100','CDMX' );
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('9','3003','02/01/2025','100','CDMX');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('10','3003','03/01/2025','100','CDMX');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('11','4004','04/01/2025','100','CDMX');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('12','4004','05/01/2025','50','CDMX');
+
+insert into Promedio_ventas (Id_orden,Id_cliente,Fecha,Total,Estado)
+VALUES ('13','4004','05/01/2025','100','CDMX');
+
+
+SELECT DISTINCT Estado
+FROM (
+    SELECT Id_cliente, Estado,
+           EXTRACT(MONTH FROM Fecha) AS Mes,
+           AVG(Total) OVER (PARTITION BY Id_cliente, EXTRACT(MONTH FROM fecha)) AS PromedioMensual
+    FROM Promedio_ventas 
+) AS sub
+GROUP BY Estado, Id_cliente
+HAVING MIN(PromedioMensual) > 100;
+create table Ocurrencias (
+Proceso varchar(10),
+Mensaje varchar(50),
+Ocurrencia int
+);
+
+INSERT INTO Ocurrencias (Proceso,Mensaje,Ocurrencia)
+VALUES 
+    ('Web','Error:No se puede dividir por 0','3'),
+    ('RestAPI','Error:Fallo la conversión','5'),
+    ('App','Error:Fallo la conversión','7'),
+    ('RestAPI','Error:Error sin identificar', '9' ),
+    ('Web','Error:Error sin identificar', '1'),
+    ('App','Error:Error sin identificar', '10'),
+    ('RestAPI','Estado Completado','8'),
+    ('WebI','Estado Completado', '6');
+   
+
+SELECT Proceso, Mensaje, MAX(Ocurrencia) AS Ocurrencia
+FROM Ocurrencias
+GROUP BY Mensaje, Proceso
+HAVING Ocurrencia = (
+    SELECT MAX(Ocurrencia)
+    FROM Ocurrencias AS p2
+    WHERE p2.mensaje = Ocurrencias.mensaje
+);
