@@ -1,0 +1,30 @@
+CREATE TABLE SampleData ( IntegerValue INTEGER PRIMARY KEY );
+
+INSERT INTO SampleData VALUES (3759),(3760),(3761),(3762),(3763);
+
+SELECT MAX(IntegerValue)
+FROM SampleData
+WHERE IntegerValue NOT IN (
+  SELECT MAX(IntegerValue) FROM SampleData
+);
+
+
+create table salarios( 
+Name varchar(20),
+Salary varchar(10)
+);
+
+INSERT INTO salarios (Name, Salary)
+VALUES   
+    ('Ayumi Arenas', 250000),
+    ('Saul Hernandez', 250000),
+    ('Alan Luna', 150000),
+    ('Victor Sanchez', 150000),
+    ('Jose Solis', 100000),
+    ('Keysha Garcia', 100000);
+
+SELECT MAX(Salary)
+FROM salarios
+WHERE Salary NOT IN (
+  SELECT MAX(Salary) FROM salarios
+);
