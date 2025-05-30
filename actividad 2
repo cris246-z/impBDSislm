@@ -1,0 +1,34 @@
+CREATE TABLE TiempodeManufactura (
+    Producto VARCHAR(15),
+    Componente VARCHAR(15),
+    DíasdeManufactura INT
+);
+
+INSERT INTO TiempodeManufactura (Producto, Componente, DíasdeManufactura)
+VALUES
+('Amanecer', 'Photon Coil', 7),
+('Amanecer', 'Filamento', 2),
+('Amanecer', 'Capacitor', 3),
+('Amanecer', 'Esfera', 1),
+('Atardecer', 'Photon Coil', 7),
+('Atardecer', 'Filamento', 2),
+('Anochecer', 'Capacitor', 3),
+('Anochecer', 'Photon Coil', 1);
+
+SELECT 
+    o.Id,
+    o.Componente AS Producto,
+    MAX(tm.DíasdeManufactura) AS Dias_para_armar,
+    o.Dias_para_entregar,
+    CASE 
+        WHEN MAX(tm.DíasdeManufactura) = o.Dias_para_entregar THEN 'En tiempo'
+        WHEN MAX(tm.DíasdeManufactura) < o.Dias_para_entregar THEN 'Adelantado'
+        ELSE 'Atrasado'
+    END AS Calendario
+FROM 
+    Ordenes o
+JOIN 
+    TiempodeManufactura tm ON o.Componente = tm.Producto
+GROUP BY 
+    o.Id, o.Componente, o.Dias_para_entregar;
+
